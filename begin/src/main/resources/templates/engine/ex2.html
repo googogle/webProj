@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th = http://www.thymeleaf.org>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <ul>
+        <li th:each="user:${list}", th:text = "${user.nick}"></li>
+    </ul>
+    <hr/>
+    <ul>
+        <li th:each="user, state:${list}" th:if = "${user.idx %2 == 0}">
+            [[${state.index}]] - [[${user.addr}]]
+        </li>
+    </ul>
+    <hr/>
+    <ul>
+        <li th:each="user, state:${list}" >
+            <span th:if="${user.idx%2 == 1}" th:text="${user.addr}"></span>
+        </li>
+    </ul>
+</body>
+</html>

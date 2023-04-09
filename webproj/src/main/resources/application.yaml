@@ -1,0 +1,9 @@
+spring:
+  datasource:
+<<<<<<< HEAD
+    url: jdbc:mysql://127.0.0.1:3306/sample?useSSL=false&useUnicode=true&ServerTimezone=Asia/Seoul
+=======
+    url: jdbc:mysql://127.0.0.1:3000/sample?useSSL=false&useUnicode=true&ServerTimezone=Asia/Seoul
+>>>>>>> b6d23b8 (작업물들)
+    username: root
+    password: 1234

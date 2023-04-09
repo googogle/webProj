@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th = http://www.thymeleaf.org>
+<head>
+    <meta charset="UTF-8">
+    <title>exLayout</title>
+</head>
+<body>
+<h1>FragmentTest(ex-layout)</h1>
+<div th:replace="~{fragments/fragment1 :: part1}"></div>
+<div th:insert="~{fragments/fragment1 :: part2}"></div>
+</body>
+</html>

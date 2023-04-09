@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th = http://www.thymeleaf.org>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1 th:text = "${'helloWorld'}"></h1>
+    <a th:href = "@{/engine/ref(uid=${119})}">119</a>
+    <a th:href = "@{/engine/ref2/{param1}/{param2}(param1 = ${'Lee'}, param2 = ${'1234'})}">Login</a>
+    <a th:href = "@{/engine/redirect}">redirect</a>
+</body>
+</html>

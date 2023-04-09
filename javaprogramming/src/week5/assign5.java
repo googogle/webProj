@@ -1,0 +1,60 @@
+package week5;
+import java.util.Scanner;
+public class assign5 {
+
+	public static void main(String[] args) {
+		Scanner scanner = new Scanner(System.in);
+		int a ; int b; String op;
+		a = scanner.nextInt(); b = scanner.nextInt(); op = scanner.next();
+		if(op.equals("+")) {
+			Add aa = new Add();
+			aa.setValue(a, b);
+			System.out.println(aa.calculate());
+		}
+		else if(op.equals("*")) {
+			Mul mm = new Mul();
+			mm.setValue(a, b);
+			System.out.println(mm.calculate());
+		}
+		else if(op.equals("-")) {
+			Sub ss = new Sub();
+			ss.setValue(a, b);
+			System.out.println(ss.calculate());
+			
+		}
+		else if(op.equals("/")) {
+			if(b == 0 ) {System.out.println("계산할 수 없습니다."); return;}
+			Div dd = new Div();
+			dd.setValue(a, b);
+			System.out.println(dd.calculate());
+		}
+		else System.out.println("잘못된 연산자입니다.");
+
+	}
+
+}
+
+abstract class Calc { // 추상 클래스
+	 private int x;
+	 private int y;
+	 public int getX() {return x;};
+	 public int getY() {return y;};
+	 public void setValue(int a, int b) {this.x = a; this.y = b;};
+	 abstract int calculate();
+	}
+	class Add extends Calc {
+		public Add() {};
+	  public int calculate() {return this.getX() + this.getY();};
+	}
+	class Mul extends Calc {
+		public Mul() {};
+		 public int calculate() {return this.getX() * this.getY();};
+	}
+	class Sub extends Calc {
+		public Sub() {};
+		 public int calculate() {return this.getX() - this.getY();};
+	}
+	class Div extends Calc {
+		public Div() {};
+		public int calculate() {return this.getX() / this.getY();};
+	}

@@ -1,0 +1,31 @@
+package week5;
+
+public class assign5 {
+
+	public static void main(String[] args) {
+		
+
+	}
+
+}
+
+abstract class Calc { // 추상 클래스
+	 private int x;
+	 private int y;
+	 public int getX() {return x;};
+	 public int getY() {return y;};
+	 public void setValue(int a, int b) {this.x = a; this.y = b;};
+	 abstract int calculate();
+	}
+	class Add extends Calc {
+	  public int calculate() {return this.x + this.y;};
+	}
+	class Mul extends Calc {
+		 public int calculate() {return x * y;};
+	}
+	class Sub extends Calc {
+	  // Add code here...
+	}
+	class Div extends Calc {
+	  // Add code here...
+	}

@@ -1,0 +1,32 @@
+package week5;
+
+public class assign5 {
+
+	public static void main(String[] args) {
+		
+
+	}
+
+}
+
+abstract class Calc { // 추상 클래스
+	 private int x;
+	 private int y;
+	 public int getX() {return x;};
+	 public int getY() {return y;};
+	 public void setValue(int a, int b) {this.x = a; this.y = b;};
+	 abstract int calculate();
+	}
+	class Add extends Calc {
+	  public int calculate() {return this.getX() + this.getY();};
+	}
+	class Mul extends Calc {
+		 public int calculate() {return this.getX() * this.getY();};
+	}
+	class Sub extends Calc {
+		 public int calculate() {return this.getX() - this.getY();};
+	}
+	class Div extends Calc {
+		
+		public int calculate() {return this.getX() / this.getY();};
+	}

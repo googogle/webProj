@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th = http://www.thymeleaf.org>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap Example</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <style>
+        #a { display:block; text-decoration:none; }
+        .list-group-item d-flex justify-content-between align-items-left{
+            display:block;
+        }
+        .img-fluid{
+            margin-bottom: 10px;
+            border: 2px solid gray;
+            border-radius: 5px;
+
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+    <a class="navbar-brand" href="#">로고</a>
+    <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+            <a class="nav-link" href="#">링크1</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">링크2</a>
+        </li>
+    </ul>
+    <ul class="navbar-nav">
+        <li class="nav-item dropdown">
+            <a th:if="${user?.nick != null}" th:text="|Hi ${user.nick}|" class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown"></a>
+            <a th:if="${user?.nick == null}" th:text="'Hi Guest'" class="nav-link dropdown-toggle" href="#" id="navbardrop2" data-toggle="dropdown"></a>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" href="#">마이 페이지</a>
+                <a th:if="${user?.nick == null}" class="dropdown-item" href="/login">로그인</a>
+                <a th:if="${user?.nick != null}" class="dropdown-item" href="/logout">로그아웃</a>
+            </div>
+        </li>
+    </ul>
+</nav>
+
+<div class="container mt-3">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="input-group mb-3">
+                <form id = "localSearchForm" method="get" action="/engine/localsearch">
+                    <input type="text" name = "searchKeyword" class="form-control" placeholder="검색어를 입력하세요..." aria-label="Recipient's username" aria-describedby="button-addon2">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="button" id="button-addon2" onclick="localSearchSubmit()">검색</button>
+                    </div>
+                </form>
+            </div>
+            <div class="text-center mb-3">
+                <img th:src="${foodData?.imageLink}" width="300px" height="220px" onerror="this.src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACCCAMAAADovAORAAAAQlBMVEX4+PiZmZnc3Nzf39+VlZX19fXy8vL7+/v////i4uK0tLTu7u6hoaHn5+e3t7fq6uqnp6etra3GxsbR0dGMjIzAwMAeDzKFAAAERElEQVR4nO2a65KjIBCFVS4tQUKiM+//qkuDJhIvkZoE3Kr+fszUZqzNsWkOl+6qIgiCIAiCIAiCIAiCIAiC+H8AIYRERGklbxFSG9ZMMGbsaUVDpY1qFiijSytbQ5oppEop43C/2BhpI0uri4FRLDNazqQ9c+NcgoMopdcSVavwIi5bzoH2eqzY0APC+rexeVVt4fPA7DqAsP6ZXIp2kBg59dauBKaEKp7B0ufBkbT0GVFYL8aWHdTgny1qwhhbdfxxTIhyegHj9T5tn3hLK5YPAkc34fmwYhzNnY+jkmLrvUGqtDf8IDYpUn4oNOAvU2J9w7VMHv5iMVmILjPd0sIkHqYLpkQ6gIsSO564c3tWBcIrcEyPBhdn2UMtoFlnPmOATRlSFuUruH8eWrY/B8brqCuI14VaZDdffXzxDX4bfWRyZ+/OdBFzqniWjSS87GfYzFzo6zlqTa1/hZyTzW4dDVrF52r5zaxtatB7M0422JpooGO13caWxnmZyugNTu7LJ4C08harHRhrRIt/enk8aY35K26f+zpVwt7wPg8urxun9jaEy5z4cZXzXKGXp/D6hyNxJqBa/zH/ucSP25xWtvwy6OoXfGx9uPEd+DV+fuWFv4dZzLRILq9vl+s9xLbm995p5tc4VWXOWwezmO5zufzeCAC8h0K1F2jhwhdyWdIh70+4ZXVHLu+dTYTVoXNyG6igOa9cfm2d/TKXCgKcr/G+hfb3vHI7XYHzLtZcDMDgptlgh3qZuyeRy3uAZvCzrHMHSfext7dXueIkcusGL0sYc7PsZ4D2wqcUKSd31xkMoFrvt1fM2nW5OZNh13cbF3p0MJ8X23Jz+q5dHCsnubjyNkFtzRm09w25WVc1u/iySS6qZabDVOC/ztCe9ibe/A9fRC92ZEEuvzlPcH6rr119692nUy4s5GbdkeHZdkVu2DHe3QpcaSvd9rfhG9GFrPvd5WkC5U47xo6FzboYfuoNuXlPE7A4q6FcPDug3/L62lithvlePZab+azmLzbi0e1CbINEXj9/rskVmU/Ci3sGqL3ajm8RydV5T5YrFxvXwUWsv1+26Odys9/i4HBG1154ayvabebBzH9HhgGajadIKfGhr+Sut4roqj+hGBiKcdl7SOyz7BNKl4fnjipSTGGP+ZJW7E2rEnwMPYpMKQtXIRWKFFq9GVRY2EtIRV8w+qKoHXxFOC22VbmqZei8SFLri2rFatgyXS0r2YGhDzW2PFApxbgvgLXLw5YrS6utxl6cIxrwIqp8cxYc7XQyCePwTXyZj9m9JjwIbU7l+7IQ8FrY9jiLdw9kRoY2R7savbFrU50gER6MK4YyWlSPshRUYmrpPUcePJlaYlGash71aD42clFYK4+0K83R2CZ7ssg+cYPPppZobJRmSosTBvaJy1ehR4Q4TYvxPrBSBiYIgiAIgiAIgiAIgiAI4gP8A6fOJYAVOKW2AAAAAElFTkSuQmCC'" alt="이미지 설명" class="img-fluid">
+                <ul>
+                    <li th:if="${foodData?.title != null}" class="list-group-item d-flex justify-content-between align-items-left">
+                        <span th:utext="|식당이름 : ${foodData?.title}|"></span>
+                    </li>
+                    <li th:if="${foodData?.category != null}" th:text="|카테고리 : ${foodData?.category}|" class="list-group-item d-flex justify-content-between align-items-left">
+                    <li th:if="${foodData?.address != null}" th:text="|주소 : ${foodData?.address}|" class="list-group-item d-flex justify-content-between align-items-left">
+                    <li th:if="${foodData?.roadAddress != null}" th:text="|도로명주소 : ${foodData?.roadAddress}|" class="list-group-item d-flex justify-content-between align-items-left">
+                    <li th:if="${foodData?.homepageLink != null}" class="list-group-item d-flex justify-content-between align-items-left">
+                        <a th:text="${foodData?.homepageLink}|" th:href="${foodData?.homepageLink}"></a>
+                    </li>
+                </ul>
+                <form th:if="${user?.nick!= null && foodData?.title != null}" id="myForm" method="post" action="/addmylist">
+                    <input type="hidden" name="title" th:value="${foodData.title}">
+                    <input type="hidden" name="roadAddr" th:value="${foodData.roadAddress}">
+                    <input type="hidden" name="category" th:value="${foodData.category}">
+                    <button type="submit" class="btn btn-primary">내 목록에 추가</button>
+                </form>
+
+            </div>
+        </div>
+        <div th:if="${user?.nick != null}" class="col-md-6">
+            <h2>MyList</h2>
+            <ul class="list-group">
+                <li th:if="${myfoods != null}" th:each="myfood: ${myfoods}" class="list-group-item d-flex justify-content-between align-items-center">
+                    <span th:utext="|식당이름 : ${myfood.title}<br>카테고리 : ${myfood.category}<br>도로명주소 : ${myfood.roadAddr}|"></span>
+                    <button type="button" th:onclick="|location.href='/removemyfood?idx=${myfood.idx}'|" class="btn btn-danger ml-auto">삭제</button>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<script>
+	function localSearchSubmit(){
+        var searchForm = document.getElementById('localSearchForm');
+        searchForm.submit();
+	}
+	</script>
+</body>
+</html>
