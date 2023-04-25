@@ -1,0 +1,84 @@
+package midTernTest;
+
+public class assign5 {
+	public static void main(String args[]) {
+		final int SIZE = 2;
+		Character man[] = new Character[SIZE];
+		// fireman과 waterman을 선언한다.
+		// 이름 : fireman, 체력 : 100
+		man[0] = new FireMan("fireman", 100); // 코드 수정
+
+		// 이름 : waterman, 체력 : 100
+		man[1] = WaterMan("waterman", 100); // 코드 수정
+
+		// 각 저항(물, 화염)의 노출 빈도를 각각 변수에 입력 받는다.
+		// 노출 빈도는 10 이상이 될 수 없다.
+		int FireLoop = 0; // 화염 저항 노출 빈도 입력
+		int WaterLoop = 0; // 물 저항 노출 빈도 입력
+
+		// 각 저항의 노출 빈도에 따라 캐릭터들을 노출 시킨다.
+
+		// 결과 출력
+		for (int i = 0; i < SIZE; i++) {
+			System.out.println(man[i].getHealth());
+		}
+	}
+}
+
+abstract class Character {
+	String name;
+	int health;
+
+	public Character(String name, int hp) {
+		this.name = name;
+		this.health = hp;
+	}
+
+	abstract public void WaterResistance();
+
+	abstract public void FireResistance();
+
+	public int getHealth() {
+		return health;
+	}
+}
+
+//Character를 상속받는 FireMan 클래스 선언
+//FireMan의 각 저항에 따른 체력 변화량은 아래와 같다.
+//화염 : -1, 물 : -5
+
+//Character를 상속받는 WatereMan 클래스 선언
+//FireMan의 각 저항에 따른 체력 변화량은 아래와 같다.
+//화염 : -2, 물 : -1
+
+class FireMan extends Character {
+
+	public FireMan(String name, int hp) {
+		super(name, hp);
+
+	}
+
+	public void WaterResistance() {
+		this.health -= 5;
+	}
+
+	public void FireResistance() {
+		this.health -= 1;
+	}
+}
+
+class WaterMan extends Character {
+
+	public WaterMan(String name, int hp) {
+		super(name, hp);
+
+	}
+
+	public void WaterResistance() {
+		this.health -= 1;
+	}
+
+	public void FireResistance() {
+		this.health -= 2;
+	}
+}

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th = http://www.thymeleaf.org>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta name="description" content="" />
+  <meta name="author" content="" />
+  <title>Shop Homepage - Start Bootstrap Template</title>
+  <!-- Favicon-->
+  <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+  <!-- Bootstrap icons-->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+  <!-- Core theme CSS (includes Bootstrap)-->
+  <link href="css/styles.css" rel="stylesheet" />
+</head>
+<body>
+<!-- Navigation-->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container px-4 px-lg-5">
+    <a class="navbar-brand" th:href="@{/home}">Start Bootstrap</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+        <li class="nav-item"><a class="nav-link active" aria-current="page" th:href="@{/home}">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="#!">All Products</a></li>
+            <li><hr class="dropdown-divider" /></li>
+            <li><a class="dropdown-item" href="#!">Popular Items</a></li>
+            <li><a class="dropdown-item" href="#!">New Arrivals</a></li>
+          </ul>
+        </li>
+      </ul>
+      <div class="container-fluid d-flex align-items-center">
+        <!-- 로고 -->
+        <!-- 드롭다운 아이콘과 드롭다운 메뉴 -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <form class="d-flex me-auto">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+        <div th:if="${user?.userNickname!=null}" class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <!-- 유저 아이디 -->
+            <li class="nav-item dropdown">
+              <a th:text="|Hi! ${user?.userNickname}|" class="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" href="#">마이페이지</a></li>
+                <li><a th:href="@{/logout}" class="dropdown-item" href="#">로그아웃</a></li>
+              </ul>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="navbarDropdown2" data-bs-toggle="dropdown" aria-expanded="false">
+                Menu
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown2" style="position: absolute; left: calc(100% - 130px);">
+                <li><a class="dropdown-item" href="#">마이페이지</a></li>
+                <li><a class="dropdown-item" th:href="@{/myProduct}">내 판매</a></li>
+                <li><a class="dropdown-item" th:href="@{/myBidding}">내 입찰</a></li>
+                <li><a class="dropdown-item" href="/product_registration">물품 등록</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <ul>
+          <a th:if="${user?.userNickname==null}" class="btn btn-secondary" th:text="로그인" th:href="@{/kakao_loginForm}"></a>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>
+<!-- Header-->
+<header class="bg-dark py-5">
+  <div class="container px-4 px-lg-5 my-5">
+    <div class="text-center text-white">
+      <h1 class="display-4 fw-bolder">Shop in style</h1>
+      <p class="lead fw-normal text-white-50 mb-0">With this shop hompeage template</p>
+    </div>
+  </div>
+</header>
+<!-- Section-->
+<section class="py-5">
+  <h2>입찰 진행중</h2>
+  <div class="container px-4 px-lg-5 mt-5">
+    <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+      <div th:each="product : ${productList}" class="col mb-5">
+        <div class="card h-100">
+          <!-- Product image-->
+          <img class="card-img-top" th:src="@{${product.productImage}}" alt="..." />
+          <!-- Product details-->
+          <div class="card-body p-4">
+            <div class="text-center">
+              <!-- Product name-->
+              <h5 th:text="${product.productName}" class="fw-bolder"></h5>
+              <a th:each="category : ${product.productCategories_s}">
+                <span class="badge bg-secondary me-1" th:text="${category}"></span>
+              </a>
+              <!-- Product price-->
+              <p th:text="|시작가 : ${product.productStartingPrice} 원|" ></p>
+              <p th:text="|최고 입찰가 : ${product.topPrice} 원|" ></p>
+              <p th:text="|종료일 : ${#temporals.format(product.endTime, 'yyyy-MM-dd HH:mm:ss')}|"></p>
+            </div>
+          </div>
+          <!-- Product actions-->
+          <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+            <div class="text-center"><a th:text="|입찰하러 가기|" th:href="@{/product_detail(idx=${product.idx})}" class="btn btn-outline-dark mt-auto"></a></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+<!-- Footer-->
+<footer class="py-5 bg-dark">
+  <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2023</p></div>
+</footer>
+<!-- Bootstrap core JS-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Core theme JS-->
+<script src="js/scripts.js"></script>
+</body>
+</html>

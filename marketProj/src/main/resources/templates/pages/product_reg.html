@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>물품 등록</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- CSS only -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css">
+
+    <!-- JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+
+<div class="container-fluid">
+    <form method="post" enctype="multipart/form-data" action="/product_registration" id = "myForm">
+        <div class="mb-3">
+            <label for="item-name" class="form-label">물건 이름</label>
+            <input type="text" class="form-control" id="item-name" name="item_name">
+        </div>
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                카테고리 선택
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="categoryDropdown">
+                <li><a class="dropdown-item" href="#" onclick="addCategory('의류')">의류</a></li>
+                <li><a class="dropdown-item" href="#" onclick="addCategory('전자제품')">전자제품</a></li>
+                <li><a class="dropdown-item" href="#" onclick="addCategory('가구')">가구</a></li>
+                <li><a class="dropdown-item" href="#" onclick="addCategory('도서')">도서</a></li>
+            </ul>
+            <div class="mt-2" id="selectedCategories">
+                <!-- 선택한 카테고리가 추가되는 곳 -->
+            </div>
+            <input type="hidden" name="categoryList" id="categoryListInput">
+        </div>
+
+        <div class="mb-3">
+            <label for="item-description" class="form-label">물건 설명</label>
+            <textarea class="form-control" id="item-description" name="item_description"></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="item-image" class="form-label">이미지</label>
+            <input class="form-control" type="file" id="item-image" name="item_image">
+        </div>
+        <div class="mb-3">
+            <label for="start-price" class="form-label">경매 시작가</label>
+            <input type="number" class="form-control" id="start-price" name="start_price" min="0">
+        </div>
+        <div class="mb-3">
+            <label for="end-time" class="form-label">경매 종료 시각</label>
+            <input type="datetime-local" class="form-control" id="end-time" name="end_time">
+        </div>
+
+        <button type="button" onclick="checkForm();" class="btn btn-primary">전송</button>
+    </form>
+</div>
+
+<script>
+let categoryList = [];
+let form = document.getElementById('myForm');
+function addCategory(category) {
+  const selectedCategories = document.getElementById("selectedCategories");
+  if (!categoryList.includes(category)) {
+    categoryList.push(category);
+    const categoryListInput = form.querySelector('#categoryListInput');
+    categoryListInput.value = JSON.stringify(categoryList);
+    const categoryBadge = document.createElement("span");
+    categoryBadge.className = "badge bg-secondary me-1";
+    categoryBadge.textContent = category;
+    selectedCategories.appendChild(categoryBadge);
+  }
+}
+
+function checkForm() {
+  const frm = document.getElementById("myForm");
+  const inputs = document.querySelectorAll("form input");
+  let flag = true;
+  for (let i = 0; i < inputs.length; i++) {
+    if (inputs[i].value === "") {
+      alert("입력되지 않은 값이 있습니다.");
+      flag = false;
+      break;
+    }
+  }
+  if(flag) frm.submit();
+}
+
+</script>
+</body>
+</html>

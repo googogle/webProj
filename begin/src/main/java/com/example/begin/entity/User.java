@@ -18,7 +18,7 @@ import java.util.List;
 public class User implements DateListener {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idx;
+    private Long idx ;
 
     //@Column(name = "user_id", nullable = false, length = 100, unique = true)
     private String userId;

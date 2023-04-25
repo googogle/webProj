@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th = http://www.thymeleaf.org>
+<head>
+  <title>중고 거래 서비스</title>
+  <!-- CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css">
+
+  <!-- JavaScript and dependencies (Popper.js, jQuery) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+
+
+</head>
+<body>
+<header>
+  <nav class="navbar navbar-expand-md navbar-light bg-light">
+    <div class="container-fluid d-flex align-items-center">
+      <!-- 로고 -->
+      <!-- 드롭다운 아이콘과 드롭다운 메뉴 -->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <form class="d-flex me-auto">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
+      <div th:if="${user?.userNickname!=null}" class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <!-- 유저 아이디 -->
+          <li class="nav-item dropdown">
+            <a th:text="|Hi! ${user?.userNickname}|" class="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="#">마이페이지</a></li>
+              <li><a th:href="@{/logout}" class="dropdown-item" href="#">로그아웃</a></li>
+            </ul>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="navbarDropdown2" data-bs-toggle="dropdown" aria-expanded="false">
+              Menu
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown2" style="position: absolute; left: calc(100% - 130px);">
+              <li><a class="dropdown-item" href="#">마이페이지</a></li>
+              <li><a class="dropdown-item" th:href="@{/myProduct}">내 판매</a></li>
+              <li><a class="dropdown-item" th:href="@{/myBidding}">내 입찰</a></li>
+              <li><a class="dropdown-item" href="/product_registration">물품 등록</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <ul>
+        <a th:if="${user?.userNickname==null}" class="btn btn-secondary" th:text="로그인" th:href="@{/kakao_loginForm}"></a>
+      </ul>
+    </div>
+  </nav>
+</header>
+<section>
+
+</section>
+
+
+</body>
+
+</html>

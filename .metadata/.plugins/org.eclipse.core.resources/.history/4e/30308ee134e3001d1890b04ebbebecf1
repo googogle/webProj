@@ -1,0 +1,22 @@
+package midTernTest;
+
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
+public class assign4 {
+
+	public static void main(String[] args) {
+		String regExp = "^[0-9]$";
+		Scanner sc = new Scanner(System.in);
+		int n = 0;
+		while (true) {
+			String s = sc.next();
+			if (s.matches(regExp)) {
+				n = Integer.parseInt(s); break;
+			}
+		}
+		System.out.println(n);
+
+	}
+
+}
